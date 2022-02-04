@@ -13,6 +13,7 @@ def status():
     """ return a JSON file with Status: OK """
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats', strict_slashes=False)
 def count():
     """ Return the number of objects in storage at a given class """
