@@ -30,9 +30,9 @@ def retrieve_state(state_id):
                  strict_slashes=False)
 def delete_state(state_id):
     """ Delete a State """
-    state = storage.get('State', state_id)
+    state = storage.get(State, state_id)
     if state:
-        storage.remove(state)
+        state.delete()
         storage.save()
         return jsonify({})
     abort(404)
