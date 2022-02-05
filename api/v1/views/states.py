@@ -20,11 +20,10 @@ def all_states():
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def retrieve_state(state_id):
     """ Retrieve a particular State """
-    try:
-        state = jsonify(storage.get('State', state_id).to_dict())
-        return state
-    except:
+    the_obj = storage.get(State, state_id)
+    if the_obj is None:
         abort(404)
+    return jsonify(the_obj.to_dict())
 
 
 @app_views.route('/states/<state_id>', methods=['DELETE'],
