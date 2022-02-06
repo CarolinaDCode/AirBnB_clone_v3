@@ -66,7 +66,7 @@ def update_user(user_id):
         if body is None:
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
         for key, value in body.items():
-            if key != 'id' and key != 'created_at' and key != 'updated_at':
+            if key not in ['id', 'email', 'created_at', 'updated_at']:
                 setattr(my_user, key, value)
         my_user.save()
         return make_response(jsonify(my_user.to_dict()), 200)
