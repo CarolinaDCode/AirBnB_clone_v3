@@ -45,11 +45,12 @@ def create_user():
     user_name = request.get_json()
     if not user_name:
         abort(400, {'Not a JSON'})
-    elif 'email' not in user_name:
+    if 'email' not in user_name:
         abort(400, {'Missing email'})
-    elif 'password' not in user_name:
+    if 'password' not in user_name:
         abort(400, {'Missing password'})
     new_user = User(**user_name)
+    storage.new(new_user)
     storage.save()
     return jsonify(new_user.to_dict()), 201
 
