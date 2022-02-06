@@ -10,6 +10,18 @@ from models.state import State
 from models.city import City
 
 
+@app_views.route('/places',
+                 methods=['GET'],
+                 strict_slashes=False)
+def retrieve_places():
+    """ retrieve all places """
+    places = []
+    all_places = storage.all('Place').values()
+    for place in all_places:
+        places.append(place.to_dict())
+    return jsonify(places)
+
+
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
                  strict_slashes=False)
 def jsonify_places_1(city_id):
