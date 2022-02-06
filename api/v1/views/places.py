@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """
-Cities file
+New view for City objects that handles default Restful API actions
 """
-from flask import jsonify, request, abort, make_response
+from flask import Flask, jsonify, abort, request, make_response
 from api.v1.views import app_views
 from models import storage
+from models.place import Place
 from models.state import State
 from models.city import City
-from models.place import Place
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
