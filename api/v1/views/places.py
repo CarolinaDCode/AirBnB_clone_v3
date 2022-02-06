@@ -85,16 +85,13 @@ def create_place(city_id):
                  strict_slashes=False)
 def update_place(place_id):
     """ Update a Place """
-    if place_id is None:
-        return abort(404)
-    my_place = storage.get(Place, place_id)
-    if my_place is not None:
-        body = request.get_json(silent=True)
-        if body is None:
-            return make_response(jsonify({'error': 'Not a JSON'}), 400)
-        for key, value in body.items():
-            if key != 'id' and key != 'created_at' and key != 'updated_at':
-                setattr(my_place, key, value)
-        my_place.save()
-        return make_response(jsonify(my_place.to_dict()), 200)
-    return abort(404)
+    a_place = storage.get('Place', place_id)
+    if a_place is None:
+        abort(404)
+    if not request.json:
+        abort(400, 'Not a JSON')
+    for req in request.get_json(silent=True):
+        if req not in ['id', 'user_id', 'city_id', 'created_at', 'updated_at']:
+            setattr(a_place, req, request.json[req])
+    a_place.save()
+    return jsonify(a_place.to_dict())
