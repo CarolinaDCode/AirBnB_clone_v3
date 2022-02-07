@@ -2,7 +2,7 @@
 """
 New view for City objects that handles default Restful API actions
 """
-from flask import Flask, jsonify, abort, request, make_response
+from flask import jsonify, abort, request, make_response
 from api.v1.views import app_views
 from models import storage
 from models.place import Place
@@ -68,6 +68,7 @@ def jsonify_places_4(city_id):
             return make_response(jsonify({'error': 'Missing name'}), 400)
         json_post['city_id'] = city_id
         new = Place(**json_post)
+        print(new)
         new.save()
         return make_response(jsonify(new.to_dict()), 201)
     except:
