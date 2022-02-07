@@ -31,12 +31,3 @@ def jsonify_places_1(city_id):
     for obj in the_obj.places:
         my_list.append(obj.to_dict())
     return jsonify(my_list)
-
-
-@app_views.route('/places/<place_id>', methods=['GET'],
-                 strict_slashes=False)
-def jsonify_places_2(place_id):
-    the_obj = storage.get(Place, place_id)
-    if the_obj:
-        return make_response(jsonify(the_obj.to_dict()))
-    abort(404)
