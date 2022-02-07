@@ -30,7 +30,7 @@ def jsonify_places_1(city_id):
     my_list = []
     for obj in the_obj.places:
         my_list.append(obj.to_dict())
-    return make_response(jsonify(my_list))
+    return jsonify(my_list)
 
 
 @app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
@@ -39,6 +39,17 @@ def jsonify_places_2(place_id):
     if the_obj is None:
         abort(404)
     return jsonify(the_obj.to_dict())
+
+
+@app_views.route('/places/<place_id>', methods=['DELETE'],
+                 strict_slashes=False)
+def jsonify_places_3(place_id):
+    the_obj = storage.get(Place, place_id)
+    if the_obj is None:
+        abort(404)
+    storage.delete(the_obj)
+    storage.save()
+    return jsonify({}), 200
 
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
@@ -57,7 +68,6 @@ def jsonify_places_4(city_id):
             return make_response(jsonify({'error': 'Missing name'}), 400)
         json_post['city_id'] = city_id
         new = Place(**json_post)
-        print(new)
         new.save()
         return make_response(jsonify(new.to_dict()), 201)
     except:
