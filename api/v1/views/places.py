@@ -47,7 +47,7 @@ def jsonify_places_2(place_id):
                  strict_slashes=False)
 def jsonify_places_3(place_id):
     the_obj = storage.get(Place, place_id)
-    if the_obj:
+    if the_obj is None:
         abort(404)
     storage.delete(the_obj)
     storage.save()
