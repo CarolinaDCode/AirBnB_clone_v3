@@ -50,7 +50,7 @@ def jsonify_places_3(place_id):
     if place:       
         place.delete()
         storage.save()
-        return jsonify({})
+        return jsonify({}), 200
     abort(404)
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
