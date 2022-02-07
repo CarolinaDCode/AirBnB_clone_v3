@@ -46,13 +46,12 @@ def jsonify_places_2(place_id):
 @app_views.route('/places/<place_id>', methods=['DELETE'],
                  strict_slashes=False)
 def jsonify_places_3(place_id):
-    the_obj = storage.get(Place, place_id)
-    if the_obj is None:
-        abort(404)
-    storage.delete(the_obj)
-    storage.save()
-    return jsonify({}), 200
-
+    place = storage.get(Place, place_id)
+    if place:       
+        place.delete()
+        storage.save()
+        return jsonify({})
+    abort(404)
 
 @app_views.route('/cities/<city_id>/places', methods=['POST'],
                  strict_slashes=False)
