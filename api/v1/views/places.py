@@ -37,6 +37,6 @@ def jsonify_places_1(city_id):
                  strict_slashes=False)
 def jsonify_places_2(place_id):
     the_obj = storage.get(Place, place_id)
-    if the_obj is None:
+    if the_obj:
         abort(404)
     return jsonify(the_obj.to_dict())
