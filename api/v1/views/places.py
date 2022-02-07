@@ -33,7 +33,8 @@ def jsonify_places_1(city_id):
     return jsonify(my_list)
 
 
-@app_views.route('/places/<place_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/places/<place_id>', methods=['GET'],
+                 strict_slashes=False)
 def jsonify_places_2(place_id):
     the_obj = storage.get(Place, place_id)
     if the_obj is None:
