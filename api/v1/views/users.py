@@ -52,7 +52,7 @@ def create_user():
     new_user = User(**user_name)
     storage.new(new_user)
     storage.save()
-    return jsonify(new_user.to_dict()), 201
+    return make_response(jsonify(new_user.to_dict()), 201)
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'],
