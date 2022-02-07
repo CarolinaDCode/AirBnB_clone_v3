@@ -17,7 +17,7 @@ def retrieve_places():
     all_places = storage.all('Place').values()
     for place in all_places:
         places.append(place.to_dict())
-    return jsonify(places)
+    return make_response(jsonify(places))
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
