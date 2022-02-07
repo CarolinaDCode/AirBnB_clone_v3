@@ -70,7 +70,7 @@ def jsonify_places_4(city_id):
         new = Place(**json_post)
         new.save()
         return make_response(jsonify(new.to_dict()), 201)
-    except():
+    except:
         abort(404)
 
 
