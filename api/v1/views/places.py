@@ -40,4 +40,3 @@ def jsonify_places_2(place_id):
     if the_obj:
         return make_response(jsonify(the_obj.to_dict()))
     abort(404)
-    
