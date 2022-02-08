@@ -12,7 +12,7 @@ from models.user import User
 def all_users():
     """ Retrieve a list of all User objects """
     all_users = []
-    for user in storage.all('user').values():
+    for user in storage.all(User).values():
         all_users.append(user.to_dict())
     return jsonify(all_users)
 
@@ -50,7 +50,7 @@ def create_user():
     if 'password' not in user_name:
         abort(400, {'Missing password'})
     new_user = User(**user_name)
-    storage.new(new_user)
+    # storage.new(new_user)
     storage.save()
     return make_response(jsonify(new_user.to_dict()), 201)
 
@@ -62,7 +62,7 @@ def update_user(user_id):
     if user_id is None:
         abort(404)
     my_user = storage.get(User, user_id)
-    if my_user is not None:
+    if my_user:
         body = request.get_json(silent=True)
         if body is None:
             return make_response(jsonify({'error': 'Not a JSON'}), 400)
