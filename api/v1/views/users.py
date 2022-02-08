@@ -21,7 +21,7 @@ def all_users():
 def retrieve_user(user_id):
     """ Retrieve a particular user """
     the_obj = storage.get(User, user_id)
-    if the_obj is None:
+    if not the_obj:
         abort(404)
     return jsonify(the_obj.to_dict())
 
@@ -31,11 +31,11 @@ def retrieve_user(user_id):
 def delete_user(user_id):
     """ Delete a user """
     user = storage.get(User, user_id)
-    if user is None:
+    if not user:
         abort(404)
-    user.delete()
+    storage.delete(user)
     storage.save()
-    return jsonify({}), 200
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route('/users', methods=['POST'],
@@ -60,7 +60,7 @@ def create_user():
 def update_user(user_id):
     """ Update a user """
     if user_id is None:
-        return abort(404)
+        abort(404)
     my_user = storage.get(User, user_id)
     if my_user is not None:
         body = request.get_json(silent=True)
